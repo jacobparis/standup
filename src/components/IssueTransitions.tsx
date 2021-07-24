@@ -2,16 +2,15 @@ import React from 'react'
 
 import axios from 'axios'
 import {
-  QueryClient,
   useMutation,
   useQuery,
+  useQueryClient,
 } from 'react-query'
 
 import {useUser} from '../hooks/useUser'
 
-const queryClient = new QueryClient()
-
 export default function IssueTransitions({id, dark, status}) {
+  const queryClient = useQueryClient()
   const user = useUser()
 
   if (!user) {
@@ -36,16 +35,17 @@ export default function IssueTransitions({id, dark, status}) {
   const doTransition = (transition) => axios.post('api/transitions', transition)
   const mutation = useMutation(doTransition, {
     async onMutate(transition) {
-      await queryClient.cancelQueries(['userIssues', user.accountId])
+      await queryClient.cancelQueries(['user', user.accountId, 'issues'])
 
       const previousIssues = queryClient.getQueryData([
-        'userIssues',
+        'user',
         user.accountId,
+        'issues',
       ]) as any[]
 
       if (previousIssues) {
         queryClient.setQueryData(
-          ['userIssues', user.accountId],
+          ['user', user.accountId, 'issues'],
           previousIssues.map((issue) => {
             if (issue.id !== transition.issue) return issue
 
@@ -63,7 +63,7 @@ export default function IssueTransitions({id, dark, status}) {
       return {previousIssues}
     },
     onSettled() {
-      queryClient.invalidateQueries(['userIssues', user.accountId])
+      queryClient.invalidateQueries(['user', user.accountId, 'issues'])
     },
     onError(error, transition, context: any) {
       if (context && context.previousIssues) {

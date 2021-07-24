@@ -1,12 +1,7 @@
 import React from 'react'
 
 import axios from 'axios'
-import {
-  QueryClient,
-  useQuery,
-} from 'react-query'
-
-const queryClient = new QueryClient()
+import {useQuery} from 'react-query'
 
 export default function IssueIntegrations({id}) {
   const {isLoading, data: integrations} = useQuery(
