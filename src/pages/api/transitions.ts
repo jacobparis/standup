@@ -90,7 +90,7 @@ export default async function Transitions(
       )
 
       if (response.status === 200 || response.status === 204) {
-        res.statusCode = response.status
+        res.statusCode = 200
         res.json({success: true})
 
         return
