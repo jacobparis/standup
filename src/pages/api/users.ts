@@ -24,7 +24,11 @@ export default async function Users(req: NextApiRequest, res: NextApiResponse) {
           .filter((user) => user.active)
           .filter((user) => user.accountType === 'atlassian'),
       )
+
+      return
     }
+
+    console.error('Unsupported response', {response})
 
     throw new Error('Unsupported response')
   } catch (err) {
@@ -34,10 +38,16 @@ export default async function Users(req: NextApiRequest, res: NextApiResponse) {
       if (error.response.status === 401) {
         res.statusCode = error.response.status
         res.json({error: 'Invalid credentials'})
+
+        return
       }
     }
 
+    console.error('Unsupported error', {error})
+
     res.statusCode = 500
     res.json({error: 'Internal server error'})
+
+    return
   }
 }

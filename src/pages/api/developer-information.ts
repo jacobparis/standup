@@ -13,6 +13,8 @@ export default async function DeveloperInformation(
   if (!req.query.issue) {
     res.statusCode = 400
     res.json({error: 'Missing issue ID in request'})
+
+    return
   }
 
   try {
@@ -34,8 +36,12 @@ export default async function DeveloperInformation(
       res.statusCode = 200
       res.json(response.data.detail)
 
-      throw new Error('Unsupported response')
+      return
     }
+
+    console.error('Unsupported response', {response})
+
+    throw new Error('Unsupported response')
   } catch (err) {
     const error = err as AxiosError
 
@@ -43,8 +49,12 @@ export default async function DeveloperInformation(
       if (error.response.status === 401) {
         res.statusCode = error.response.status
         res.json({error: 'Invalid credentials'})
+
+        return
       }
     }
+
+    console.error('Unsupported error', {error})
 
     res.statusCode = 500
     res.json({error: 'Internal server error'})

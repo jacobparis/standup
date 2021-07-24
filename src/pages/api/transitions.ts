@@ -14,6 +14,8 @@ export default async function Transitions(
     if (!req.query.issue) {
       res.statusCode = 400
       res.json({error: 'Missing issue ID in request'})
+
+      return
     }
 
     try {
@@ -29,7 +31,11 @@ export default async function Transitions(
       if (response.status === 200) {
         res.statusCode = 200
         res.json(response.data.transitions.reverse())
+
+        return
       }
+
+      console.error('Unsupported response', {response})
 
       throw new Error('Unsupported response')
     } catch (err) {
@@ -39,11 +45,17 @@ export default async function Transitions(
         if (error.response.status === 401) {
           res.statusCode = error.response.status
           res.json({error: 'Invalid credentials'})
+
+          return
         }
       }
 
+      console.error('Unsupported error', {error})
+
       res.statusCode = 500
       res.json({error: 'Internal server error'})
+
+      return
     }
   }
 
@@ -51,11 +63,15 @@ export default async function Transitions(
     if (!req.body.issue) {
       res.statusCode = 400
       res.json({error: 'Missing issue ID in request'})
+
+      return
     }
 
     if (!req.body.transition) {
       res.statusCode = 400
       res.json({error: 'Missing transition ID in request'})
+
+      return
     }
 
     try {
@@ -76,7 +92,11 @@ export default async function Transitions(
       if (response.status === 200) {
         res.statusCode = 200
         res.json({success: true})
+
+        return
       }
+
+      console.error('Unsupported response', {response})
 
       throw new Error('Unsupported response')
     } catch (err) {
@@ -86,10 +106,17 @@ export default async function Transitions(
         if (error.response.status === 401) {
           res.statusCode = error.response.status
           res.json({error: 'Invalid credentials'})
+
+          return
         }
       }
+
+      console.error('Unsupported error', {error})
+
       res.statusCode = 500
       res.json({error: 'Internal server error'})
+
+      return
     }
   }
 

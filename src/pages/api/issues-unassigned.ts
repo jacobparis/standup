@@ -26,12 +26,20 @@ export default async function IssuesUnassigned(
     if (response.status === 401) {
       res.statusCode = response.status
       res.json({error: 'Invalid credentials'})
+
+      return
     }
 
     if (response.status === 200) {
       res.statusCode = 200
       res.json(response.data.issues)
+
+      return
     }
+
+    console.error('Unsupported response', {response})
+
+    throw new Error('Unsupported response')
   } catch (err) {
     const error = err as AxiosError
 
@@ -39,8 +47,12 @@ export default async function IssuesUnassigned(
       if (error.response.status === 401) {
         res.statusCode = error.response.status
         res.json({error: 'Invalid credentials'})
+
+        return
       }
     }
+
+    console.error('Unsupported error', {error})
 
     res.statusCode = 500
     res.json({error: 'Internal server error'})

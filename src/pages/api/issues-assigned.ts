@@ -13,6 +13,8 @@ export default async function IssuesAssigned(
   if (!req.query.accountId) {
     res.statusCode = 400
     res.json({error: 'Missing account ID in request'})
+
+    return
   }
 
   try {
@@ -32,7 +34,11 @@ export default async function IssuesAssigned(
     if (response.status === 200) {
       res.statusCode = 200
       res.json(response.data.issues)
+
+      return
     }
+
+    console.error('Unsupported response', {response})
 
     throw new Error('Unsupported response')
   } catch (err) {
@@ -42,8 +48,12 @@ export default async function IssuesAssigned(
       if (error.response.status === 401) {
         res.statusCode = error.response.status
         res.json({error: 'Invalid credentials'})
+
+        return
       }
     }
+
+    console.error('Unsupported error', {error})
 
     res.statusCode = 500
     res.json({error: 'Internal server error'})
