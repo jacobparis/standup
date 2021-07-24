@@ -13,7 +13,7 @@ import {
 
 const queryClient = new QueryClient()
 
-export default function HelloWorld({users, jiraHostUrl}) {
+export default function Standup({users, jiraHostUrl}) {
   return (
     <div>
       <JiraProvider hostUrl={jiraHostUrl}>
@@ -31,7 +31,7 @@ export default function HelloWorld({users, jiraHostUrl}) {
           <svg
             preserveAspectRatio="xMidYMax meet"
             style={{marginTop: '-1px'}}
-            className="sm:-mb-48 max-w-none"
+            className="sm:-mb-36 max-w-none"
             viewBox="0 0 1600 200"
             data-height="200"
           >
@@ -65,7 +65,7 @@ export default function HelloWorld({users, jiraHostUrl}) {
           <svg
             preserveAspectRatio="xMidYMax meet"
             style={{marginBottom: '-1px'}}
-            className="sm:-mt-48 max-w-none"
+            className="sm:-mt-36 max-w-none"
             viewBox="0 0 1600 200"
             data-height="200"
           >
