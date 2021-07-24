@@ -98,40 +98,49 @@ export default function Home() {
 
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col">
-              <label htmlFor={jiraId} className="leading-12 font-300">
-                JIRA URL
-              </label>
-
-              <TextInput
-                name="jiraHostUrl"
-                id={jiraId}
-                type="text"
-                autoComplete="url"
-                required
-                autoFocus
-              />
-
               <label htmlFor={emailId} className="leading-12 font-300">
                 JIRA Login
               </label>
-
               <TextInput
                 name="email"
                 id={emailId}
                 type="email"
                 required
+                autoFocus
                 autoComplete="email"
               />
               <label htmlFor={passwordId} className="leading-12 font-300">
                 API Key
               </label>
-
               <TextInput
                 name="password"
                 id={passwordId}
                 required
                 autoComplete="current-password"
                 type="password"
+              />
+              <p className="-mt-4 mb-4 text-xs leading-4 text-gray-700">
+                You can{' '}
+                <a
+                  href="https://id.atlassian.com/manage-profile/security/api-tokens"
+                  target="_blank"
+                  rel="noreferrer nofollow"
+                  className="text-blue-600 hover:underline"
+                >
+                  create a token in your Atlassian profile
+                </a>
+              </p>
+
+              <label htmlFor={jiraId} className="leading-12 font-300">
+                JIRA URL
+              </label>
+              <TextInput
+                name="jiraHostUrl"
+                id={jiraId}
+                type="text"
+                autoComplete="url"
+                required
+                placeholder="https://example.atlassian.net"
               />
             </div>
 
