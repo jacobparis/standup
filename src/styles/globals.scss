@@ -1,0 +1,87 @@
+@use 'sass:math';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --measure: 60ch;
+  --color-bg: #fff;
+  --color-bg-offset: #f7f7f9;
+  --color-text: #373a3c;
+  --color-text-offset: #818a91;
+  --color-border: #eceeef;
+  --color-primary: #ff335f;
+  --color-primary-transparent: #ff335f33;
+  --color-primary-text: #f7f7f9;
+  --color-primary-offset: #ff1447;
+  --color-secondary: #43a9a3;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Helvetica Neue', 'Ubuntu', sans-serif;
+  --font-weight: 300;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+h2 {
+  font-size: 1.825rem;
+  font-weight: 300;
+}
+
+p {
+  line-height: 1.625rem;
+}
+
+* {
+  max-width: var(--measure);
+}
+
+html {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+}
+
+body {
+  background-image: linear-gradient(to right, #fafafa, #f5f5fa);
+
+  color: #373a3c;
+  font-size: 1rem * math.div(17, 16);
+  -webkit-font-smoothing: antialiased;
+}
+
+html,
+body,
+div,
+header,
+nav,
+main,
+section,
+footer {
+  max-width: none;
+}
+
+@media screen {
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  a:focus,
+  a:hover {
+    color: var(--color-primary-offset);
+  }
+}
+
+em {
+  font-style: unset;
+}
+
+.leading-11 {
+  line-height: 3rem;
+}
+
+.min-vh-100 {
+  min-height: 100vh;
+}

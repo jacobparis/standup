@@ -1,0 +1,32 @@
+{
+  "title": "Standup Dashboard",
+  "titleTemplate": "%s | Standup Dashboard",
+  "description": "A dashboard for morning standup meetings",
+  "favicon": "/favicon.ico",
+  "additionalMetaTags": [
+    {"property": "author", "content": "jacob paris"},
+    {
+      "property": "keywords",
+      "content": ""
+    }
+  ],
+  "twitter": {
+    "cardType": "summary",
+    "handle": "jacobmparis",
+    "site": "jacobparis"
+  },
+  "openGraph": {
+    "type": "website",
+    "site_name": "Standup Dashboard",
+    "profile": {
+      "firstName": "Jacob"
+    },
+    "images": [
+      {
+        "url": "/images/og.jpg",
+        "width": 1280,
+        "height": 720
+      }
+    ]
+  }
+}
