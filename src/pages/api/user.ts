@@ -23,7 +23,11 @@ export default async function UserIssues(
     if (response.status === 200) {
       res.statusCode = 200
       res.json(response.data)
+
+      return
     }
+
+    console.error('Unsupported response', {response})
 
     throw new Error('Unsupported response')
   } catch (err) {
@@ -37,6 +41,8 @@ export default async function UserIssues(
         return
       }
     }
+
+    console.error('Unsupported error', {error})
 
     res.statusCode = 500
     res.json({error: 'Internal server error'})
