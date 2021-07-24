@@ -31,15 +31,15 @@ export default function Home() {
     }
 
     Cookies.set('jiraHostUrl', jiraHostUrl, {
-      domain: 'localhost',
-      secure: false,
+      domain: window.location.hostname,
+      secure: window.location.hostname !== 'localhost',
       path: '/',
       sameSite: 'strict',
     })
 
     Cookies.set('credentials', window.btoa(`${email}:${password}`), {
-      domain: 'localhost',
-      secure: false,
+      domain: window.location.hostname,
+      secure: window.location.hostname !== 'localhost',
       path: '/',
       sameSite: 'strict',
     })
@@ -57,8 +57,8 @@ export default function Home() {
             setMessage('Your email or API key was incorrect')
 
             Cookies.remove('credentials', {
-              domain: 'localhost',
-              secure: false,
+              domain: window.location.hostname,
+              secure: window.location.hostname !== 'localhost',
               path: '/',
               sameSite: 'strict',
             })
