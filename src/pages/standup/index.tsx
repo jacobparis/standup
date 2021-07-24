@@ -3,6 +3,7 @@ import React from 'react'
 import axios, {AxiosError} from 'axios'
 import UnassignedIssues from 'components/UnassignedIssues'
 import UserIssues from 'components/UserIssues'
+import WelcomeBar from 'components/WelcomeBar'
 import {JiraProvider} from 'hooks/useJira'
 import cookies from 'next-cookies'
 import {
@@ -23,20 +24,7 @@ export default function HelloWorld({users, jiraHostUrl}) {
                 Standup Dashboard
               </h1>
 
-              <nav className="mb-8">
-                <ul>
-                  <li>
-                    <a
-                      href={`${jiraHostUrl}/browse/OSC`}
-                      target="_blank"
-                      rel="noreferrer nofollow"
-                      className="text-blue-400 sm:text-sm hover:underline"
-                    >
-                      JIRA Board
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <WelcomeBar />
             </div>
           </header>
 
