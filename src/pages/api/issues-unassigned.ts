@@ -10,6 +10,13 @@ export default async function IssuesUnassigned(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  if (!req.cookies.projects) {
+    res.statusCode = 400
+    res.json({error: 'Missing projects list in cookies'})
+
+    return
+  }
+
   try {
     const response = await axios.get(
       `${req.cookies.jiraHostUrl}/rest/api/3/search`,
@@ -18,7 +25,7 @@ export default async function IssuesUnassigned(
           Authorization: `Basic ${req.cookies.credentials}`,
         },
         params: {
-          jql: `project in (OSC) AND assignee in (EMPTY) AND status != Done AND status != "Needs Estimate" AND fixVersion = EMPTY ORDER BY updated DESC`,
+          jql: `project in (${req.cookies.projects}) AND assignee in (EMPTY) AND status != Done AND status != "Needs Estimate" AND fixVersion = EMPTY ORDER BY updated DESC`,
           fields: 'attachment, description, issuetype, status, summary',
         },
       },
@@ -47,6 +54,13 @@ export default async function IssuesUnassigned(
       if (error.response.status === 401) {
         res.statusCode = error.response.status
         res.json({error: 'Invalid credentials'})
+
+        return
+      }
+
+      if (error.response.status === 400) {
+        res.statusCode = error.response.status
+        res.json({error: 'Invalid request'})
 
         return
       }

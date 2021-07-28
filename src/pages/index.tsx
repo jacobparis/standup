@@ -1,7 +1,8 @@
 import React from 'react'
 
-import axios from 'axios'
+import axios, {AxiosError} from 'axios'
 import Cookies from 'js-cookie'
+import cookies from 'next-cookies'
 import Head from 'next/head'
 import {useUID} from 'react-uid'
 
@@ -87,19 +88,19 @@ export default function Home() {
         </p>
       </section>
       <main className="flex-grow">
-        <div className="max-w-sm mx-auto shadow-sm rounded-lg bg-white px-4 sm:px-6 py-3 sm:py-4">
-          <p className="font-semibold text-center mb-4">
+        <div className="max-w-sm px-4 py-3 mx-auto bg-white rounded-lg shadow-sm sm:px-6 sm:py-4">
+          <p className="mb-4 font-semibold text-center">
             Log in to your JIRA account
           </p>
 
           {message.length > 0 ? (
-            <p className="text-red-600 text-center mb-4">{message}</p>
+            <p className="mb-4 text-center text-red-600">{message}</p>
           ) : null}
 
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col">
               <label htmlFor={emailId} className="leading-12 font-300">
-                JIRA Login
+                JIRA Email
               </label>
               <TextInput
                 name="email"
@@ -119,7 +120,7 @@ export default function Home() {
                 autoComplete="current-password"
                 type="password"
               />
-              <p className="-mt-4 mb-4 text-xs leading-4 text-gray-700">
+              <p className="mb-4 -mt-4 text-xs leading-4 text-gray-700">
                 You can{' '}
                 <a
                   href="https://id.atlassian.com/manage-profile/security/api-tokens"
@@ -146,7 +147,7 @@ export default function Home() {
 
             <button
               type="submit"
-              className="px-4 py-2 w-full rounded-md bg-blue-600 border-blue-950 text-gray-50 hover:bg-blue-500 focus:border-indigo-500 focus:ring-indigo-400"
+              className="w-full px-4 py-2 bg-blue-600 rounded-md border-blue-950 text-gray-50 hover:bg-blue-500 focus:border-indigo-500 focus:ring-indigo-400"
             >
               Log in
             </button>
@@ -179,8 +180,44 @@ function TextInput({className = '', disabled = false, ...props}) {
   )
 }
 
-export async function getStaticProps() {
-  return {
-    props: {},
+export async function getServerSideProps(context) {
+  const serverSideCookies = cookies(context)
+
+  if (!serverSideCookies.jiraHostUrl) {
+    return {props: {}}
+  }
+
+  try {
+    const response = await axios.get(
+      `${serverSideCookies.jiraHostUrl}/rest/api/3/myself`,
+      {
+        headers: {
+          Authorization: `Basic ${serverSideCookies.credentials}`,
+        },
+      },
+    )
+
+    if (response.status === 200) {
+      return {
+        redirect: {
+          destination: '/logged-in',
+          permanent: false,
+        },
+      }
+    }
+
+    throw new Error('Unsupported response')
+  } catch (err) {
+    const error = err as AxiosError
+
+    if (error.response) {
+      if (error.response.status === 401) {
+        return {}
+      }
+    }
+
+    console.error(err)
+
+    throw new Error('Unsupported error')
   }
 }

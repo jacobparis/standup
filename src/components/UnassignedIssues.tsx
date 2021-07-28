@@ -7,7 +7,7 @@ import {UserProvider} from '../hooks/useUser'
 import Issue from './Issue'
 
 export default function UnassignedIssues({className = '', ...props}) {
-  const {isLoading, data: unassignedIssues} = useQuery(
+  const {isLoading, isError, data: unassignedIssues} = useQuery(
     ['user', 'unassigned', 'issues'],
     () => {
       return axios
@@ -33,6 +33,8 @@ export default function UnassignedIssues({className = '', ...props}) {
         <section>
           {isLoading ? (
             <p> Loading unassigned tickets... </p>
+          ) : isError ? (
+            <p> Error fetching tickets... </p>
           ) : (
             <div>
               {unassignedIssues.length > 0 ? (

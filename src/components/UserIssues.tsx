@@ -6,8 +6,8 @@ import {useQuery} from 'react-query'
 import {UserProvider} from '../hooks/useUser'
 import Issue from './Issue'
 
-export default function User({user, className = '', ...props}) {
-  const {isLoading, data} = useQuery(
+export default function User({user, disabled, className = '', ...props}) {
+  const {isLoading, isError, data} = useQuery(
     ['user', user.accountId, 'issues'],
     async () => {
       return axios
@@ -18,9 +18,12 @@ export default function User({user, className = '', ...props}) {
         })
         .then((response) => response.data)
     },
-    {staleTime: Infinity, enabled: !!user.accountId},
+    {staleTime: Infinity, enabled: !disabled && !!user.accountId},
   )
 
+  const issuesInDone = data
+    ? data.filter((issue) => issue.fields.status.name === 'Done')
+    : []
   const issuesInReview = data
     ? data.filter((issue) => issue.fields.status.name === 'In Review')
     : []
@@ -40,7 +43,7 @@ export default function User({user, className = '', ...props}) {
         style={{transform: 'translateY(0)'}}
         className={`bg-white sm:rounded-lg shadow-sm px-4 sm:px-6 opacity-95 py-4 ${className}`}
       >
-        <header className="flex mb-4">
+        <header className="flex">
           <img
             className="w-12 rounded-full shadow"
             src={user.avatarUrls['48x48']}
@@ -48,70 +51,76 @@ export default function User({user, className = '', ...props}) {
           <h2 className="mx-4 text-gray-500">{user.displayName}</h2>
         </header>
 
-        <section>
-          {isLoading ? (
-            <p> Loading issues... </p>
-          ) : (
-            <div>
-              {issuesInReview.length > 0 ? (
-                <div>
-                  <h3 className="mt-2 text-sm font-semibold text-gray-500">
-                    In review
-                  </h3>
+        {disabled ? null : (
+          <section className="mt-4">
+            {isLoading ? (
+              <p> Loading issues... </p>
+            ) : isError ? (
+              <p> Error fetching issues... </p>
+            ) : (
+              <div>
+                <Column
+                  items={issuesInDone}
+                  hideWhenEmpty={true}
+                  label="Done"
+                  defaultClosed
+                />
 
-                  <ul>
-                    {issuesInReview.map((issue) => (
-                      <li key={issue.id} className="mb-2 -mx-4">
-                        <Issue issue={issue} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
+                <Column
+                  items={issuesInReview}
+                  hideWhenEmpty={true}
+                  label="In review"
+                />
 
-              {issuesInProgress.length > 0 ? (
-                <div>
-                  <h3 className="mt-2 text-sm font-semibold text-gray-500">
-                    In progress
-                  </h3>
-
-                  <ul>
-                    {issuesInProgress.map((issue) => (
-                      <li key={issue.id} className="mb-2 -mx-4">
-                        <Issue issue={issue} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
-              {issuesInTodo.length > 0 ? (
-                <div>
-                  <h3 className="mt-2 text-sm font-semibold text-gray-500">
-                    To do
-                  </h3>
-
-                  <ul>
-                    {issuesInTodo.map((issue) => (
-                      <li key={issue.id} className="mb-2 -mx-4">
-                        <Issue issue={issue} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
-              {issuesInProgress.length === 0 ? (
-                <div>
-                  <h3 className="mt-2 text-sm font-semibold text-gray-500">
-                    No tickets in progress
-                  </h3>
-                </div>
-              ) : null}
-            </div>
-          )}
-        </section>
+                <Column
+                  items={issuesInProgress}
+                  hideWhenEmpty={false}
+                  label="In progress"
+                />
+                <Column
+                  items={issuesInTodo}
+                  hideWhenEmpty={true}
+                  label="To do"
+                />
+              </div>
+            )}
+          </section>
+        )}
       </div>
     </UserProvider>
+  )
+}
+
+function Column({items, hideWhenEmpty, label, defaultClosed = false}) {
+  const [isOpen, setIsOpen] = React.useState(!defaultClosed)
+
+  if (items.length === 0) {
+    return hideWhenEmpty ? null : (
+      <div>
+        <h3 className="mt-2 text-sm font-semibold text-gray-500">
+          No tickets {label}
+        </h3>
+      </div>
+    )
+  }
+
+  return (
+    <details
+      onToggle={() => setIsOpen((isOpen) => !isOpen)}
+      open={!defaultClosed}
+    >
+      <summary className="block">
+        <h3 className="inline mt-2 text-sm font-semibold text-gray-500 cursor-pointer hover:underline">
+          {label}
+        </h3>
+      </summary>
+      <ul>
+        {items.map((issue) => (
+          <li key={issue.id} className="mb-2 -mx-4">
+            <Issue issue={issue} />
+          </li>
+        ))}
+      </ul>
+    </details>
   )
 }

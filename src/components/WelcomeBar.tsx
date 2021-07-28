@@ -1,7 +1,6 @@
 import React from 'react'
 
 import axios from 'axios'
-import {useJira} from 'hooks/useJira'
 import {useQuery} from 'react-query'
 
 const today = new Date().toLocaleDateString('en-US', {
@@ -12,9 +11,7 @@ const today = new Date().toLocaleDateString('en-US', {
 })
 
 export default function WelcomeBar() {
-  const {hostUrl} = useJira()
-
-  const {isLoading, data} = useQuery(
+  const {isLoading, data: user} = useQuery(
     ['user', 'loggedIn'],
     async () => {
       return axios.get(`api/user`).then((response) => response.data)
@@ -23,23 +20,16 @@ export default function WelcomeBar() {
   )
 
   return (
-    <p className="sm:text-sm">
-      {isLoading ? null : <span>Good morning, {data.displayName}. </span>}
-      <span>
-        {' '}
-        Today is <strong>{today}</strong>.{' '}
-      </span>
+    <div className="flex items-center justify-between px-4 py-2 bg-blue-950">
+      <p className="text-4xl text-white opacity-70">Standup </p>
 
-      <span>
-        <a
-          href={`${hostUrl}/browse/OSC`}
-          target="_blank"
-          rel="noreferrer nofollow"
-          className="text-blue-400 hover:underline"
-        >
-          View JIRA board
-        </a>
-      </span>
-    </p>
+      {isLoading ? null : (
+        <img
+          className="w-12 rounded-full shadow"
+          src={user.avatarUrls['48x48']}
+          alt={user.displayName}
+        />
+      )}
+    </div>
   )
 }
