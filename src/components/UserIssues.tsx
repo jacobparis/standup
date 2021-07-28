@@ -63,24 +63,31 @@ export default function User({user, disabled, className = '', ...props}) {
                   items={issuesInDone}
                   hideWhenEmpty={true}
                   label="Done"
-                  defaultClosed
+                  key="Done"
+                  defaultClosed={true}
                 />
 
                 <Column
                   items={issuesInReview}
                   hideWhenEmpty={true}
                   label="In review"
+                  key="In review"
+                  defaultClosed={false}
                 />
 
                 <Column
                   items={issuesInProgress}
                   hideWhenEmpty={false}
                   label="In progress"
+                  key="In progress"
+                  defaultClosed={false}
                 />
                 <Column
                   items={issuesInTodo}
                   hideWhenEmpty={true}
                   label="To do"
+                  key="To do"
+                  defaultClosed={false}
                 />
               </div>
             )}
@@ -92,7 +99,7 @@ export default function User({user, disabled, className = '', ...props}) {
 }
 
 function Column({items, hideWhenEmpty, label, defaultClosed = false}) {
-  const [isOpen, setIsOpen] = React.useState(!defaultClosed)
+  const [isOpen, setIsOpen] = React.useState(() => !defaultClosed)
 
   if (items.length === 0) {
     return hideWhenEmpty ? null : (
@@ -105,12 +112,28 @@ function Column({items, hideWhenEmpty, label, defaultClosed = false}) {
   }
 
   return (
-    <details
-      onToggle={() => setIsOpen((isOpen) => !isOpen)}
-      open={!defaultClosed}
-    >
-      <summary className="block">
-        <h3 className="inline mt-2 text-sm font-semibold text-gray-500 cursor-pointer hover:underline">
+    <details open={isOpen}>
+      <summary
+        className="block -ml-4"
+        onClick={(e) => (e.preventDefault(), setIsOpen((isOpen) => !isOpen))}
+      >
+        <svg
+          className={`inline w-4 h-4 -ml-1 opacity-60 transition-transform transform ${
+            isOpen ? 'rotate-0' : '-rotate-90'
+          }`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+        <h3 className="inline mt-2 ml-1 text-sm font-semibold text-gray-500 cursor-pointer hover:underline">
           {label}
         </h3>
       </summary>
