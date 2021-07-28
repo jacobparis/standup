@@ -10,6 +10,7 @@ export default function IssueDescriptionContent({
 }: any) {
   if (type === 'inlineCard') return null
   if (type === 'hardBreak') return null
+  if (type === 'mediaGroup') return null
   if (type === 'mediaSingle') return null
   if (type === 'media') return null
 
@@ -24,6 +25,20 @@ export default function IssueDescriptionContent({
           <IssueDescriptionContent {...content} />
         )}
       </p>
+    )
+  }
+
+  if (type === 'codeBlock') {
+    return (
+      <pre className="mb-4 text-sm">
+        {content[0] ? (
+          Array.from(content).map((c, i) => (
+            <IssueDescriptionContent key={i} {...c} />
+          ))
+        ) : (
+          <IssueDescriptionContent {...content} />
+        )}
+      </pre>
     )
   }
 

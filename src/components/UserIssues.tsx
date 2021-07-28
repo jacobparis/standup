@@ -7,7 +7,19 @@ import {UserProvider} from '../hooks/useUser'
 import Issue from './Issue'
 
 export default function User({user, disabled, className = '', ...props}) {
-  const {isLoading, isError, data} = useQuery(
+  const {
+    isLoading: isStatusesLoading,
+    isError: isStatusesError,
+    data: statuses,
+  } = useQuery(
+    ['statuses'],
+    async () => {
+      return axios.get(`api/statuses`).then((response) => response.data)
+    },
+    {staleTime: Infinity, enabled: !disabled},
+  )
+
+  const {isLoading: isIssuesLoading, isError: isIssuesError, data} = useQuery(
     ['user', user.accountId, 'issues'],
     async () => {
       return axios
@@ -21,18 +33,8 @@ export default function User({user, disabled, className = '', ...props}) {
     {staleTime: Infinity, enabled: !disabled && !!user.accountId},
   )
 
-  const issuesInDone = data
-    ? data.filter((issue) => issue.fields.status.name === 'Done')
-    : []
-  const issuesInReview = data
-    ? data.filter((issue) => issue.fields.status.name === 'In Review')
-    : []
-  const issuesInProgress = data
-    ? data.filter((issue) => issue.fields.status.name === 'In Progress')
-    : []
-  const issuesInTodo = data
-    ? data.filter((issue) => issue.fields.status.name === 'To Do')
-    : []
+  const isLoading = isStatusesLoading || isIssuesLoading
+  const isError = isStatusesError || isIssuesError
 
   return (
     <UserProvider user={user}>
@@ -59,35 +61,31 @@ export default function User({user, disabled, className = '', ...props}) {
               <p> Error fetching issues... </p>
             ) : (
               <div>
-                <Column
-                  items={issuesInDone}
-                  hideWhenEmpty={true}
-                  label="Done"
-                  key="Done"
+                <ColumnGroup
+                  statuses={statuses.filter(
+                    (status) => status.statusCategory.key === 'done',
+                  )}
+                  items={data}
+                  hideWhenEmpty={() => true}
                   defaultClosed={true}
                 />
 
-                <Column
-                  items={issuesInReview}
-                  hideWhenEmpty={true}
-                  label="In review"
-                  key="In review"
+                <ColumnGroup
+                  statuses={statuses.filter(
+                    (status) => status.statusCategory.key === 'indeterminate',
+                  )}
+                  items={data}
+                  hideWhenEmpty={(status) => !status.name.match(/progress/i)}
                   defaultClosed={false}
                 />
 
-                <Column
-                  items={issuesInProgress}
-                  hideWhenEmpty={false}
-                  label="In progress"
-                  key="In progress"
-                  defaultClosed={false}
-                />
-                <Column
-                  items={issuesInTodo}
-                  hideWhenEmpty={true}
-                  label="To do"
-                  key="To do"
-                  defaultClosed={false}
+                <ColumnGroup
+                  statuses={statuses.filter(
+                    (status) => status.statusCategory.key === 'new',
+                  )}
+                  items={data}
+                  hideWhenEmpty={() => true}
+                  defaultClosed={true}
                 />
               </div>
             )}
@@ -96,6 +94,22 @@ export default function User({user, disabled, className = '', ...props}) {
       </div>
     </UserProvider>
   )
+}
+
+function ColumnGroup({statuses, items, hideWhenEmpty, defaultClosed}) {
+  if (statuses.length === 0) {
+    return null
+  }
+
+  return statuses.map((status) => (
+    <Column
+      items={items.filter((issue) => issue.fields.status.name === status.name)}
+      label={status.name}
+      key={status.name}
+      hideWhenEmpty={hideWhenEmpty}
+      defaultClosed={defaultClosed}
+    />
+  ))
 }
 
 function Column({items, hideWhenEmpty, label, defaultClosed = false}) {
