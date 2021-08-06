@@ -80,6 +80,10 @@ em {
   font-style: unset;
 }
 
+details > summary:first-of-type {
+  list-style: none;
+}
+
 .font-300 {
   font-weight: 300;
 }
