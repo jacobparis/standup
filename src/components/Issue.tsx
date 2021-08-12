@@ -9,17 +9,38 @@ export default function Issue({issue, dark = false}) {
   const [isOpen, setIsOpen] = React.useState(false)
   const {hostUrl} = useJira()
 
+  let isFlagged = false
+  if (issue.fields['customfield_10021']) {
+    isFlagged = Boolean(
+      issue.fields['customfield_10021'].some(
+        (field) => field.value === 'Impediment',
+      ),
+    )
+  }
+
   return (
     <details
       onToggle={() => setIsOpen((isOpen) => !isOpen)}
       open={isOpen}
-      className={`${isOpen ? 'bg-gray-50 sm:rounded-md pb-2' : ''} ${
-        dark ? 'bg-opacity-10' : ''
+      className={`${
+        isFlagged
+          ? isOpen
+            ? 'bg-yellow-100 sm:rounded-md pb-2'
+            : 'bg-yellow-100 sm:rounded-md'
+          : isOpen
+          ? 'bg-gray-50 sm:rounded-md pb-2'
+          : ''
+      } ${
+        dark
+          ? isFlagged
+            ? 'bg-yellow-200 bg-opacity-20'
+            : 'bg-opacity-10'
+          : ''
       }`}
     >
       <summary
         className={`block px-4 py-2 sm:rounded-md cursor-pointer  ${
-          isOpen ? '' : 'hover:bg-gray-50'
+          isOpen || isFlagged ? '' : 'hover:bg-gray-50'
         } ${dark ? 'hover:bg-opacity-10' : ''}`}
       >
         <a

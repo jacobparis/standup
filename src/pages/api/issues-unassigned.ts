@@ -1,10 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import axios, {AxiosError} from 'axios'
-import {
-  NextApiRequest,
-  NextApiResponse,
-} from 'next'
+import {NextApiRequest, NextApiResponse} from 'next'
 
 export default async function IssuesUnassigned(
   req: NextApiRequest,
@@ -26,7 +23,8 @@ export default async function IssuesUnassigned(
         },
         params: {
           jql: `project in (${req.cookies.projects}) AND assignee in (EMPTY) AND status != Done AND status != "Needs Estimate" AND fixVersion = EMPTY ORDER BY updated DESC`,
-          fields: 'attachment, description, issuetype, status, summary',
+          fields:
+            'attachment, description, issuetype, status, summary, customfield_10021',
         },
       },
     )
