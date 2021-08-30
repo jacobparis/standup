@@ -74,22 +74,145 @@ export default function Home() {
   return (
     <div className="flex flex-col min-vh-100">
       <Head>
-        <title>Log in | Standup Dashboard</title>
+        <title>Log in | 3Q</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* hero section with login form */}
+      <header className="flex items-center justify-between px-4 py-2">
+        <div>
+          <a
+            className="font-bold text-gray-800 text-28 hover:text-gray-600"
+            href="/"
+          >
+            3Q <span className="text-xl font-normal"> (three questions) </span>
+          </a>
+        </div>
+
+        <div className="flex items-center">
+          <a
+            className="px-4 py-2 text-xl text-gray-800 hover:text-gray-600"
+            href="#free"
+          >
+            Pricing
+          </a>
+          <a
+            className="px-4 py-2 text-xl text-gray-800 hover:text-gray-600"
+            href="#faq"
+          >
+            FAQ
+          </a>
+          <a
+            className="px-4 py-2 text-xl font-normal text-gray-200 bg-black rounded-lg hover:text-white hover:bg-gray-800"
+            href="#login"
+          >
+            Log in
+          </a>
+        </div>
+      </header>
+
       <section className="px-4 py-8 mx-auto max-w-7xl px-42 sm:px-6">
         <div className="mt-10 mb-4">
-          <h1 className="leading-11 text-64 font-700">Standup Dashboard</h1>
+          <h1 className="inline leading-11 text-7xl font-700">
+            Better standup meetings
+          </h1>
         </div>
         <p className="max-w-3xl mb-6 leading-snug tracking-tight text-28 font-300">
-          Automated itineraries for scrum standups based on JIRA
+          See your team and everything they're working on in one place, so
+          everyone knows what to discuss and nothing is overlooked.
+        </p>
+        <a
+          className="px-4 py-2 text-xl font-normal text-gray-200 bg-black rounded-lg hover:text-white hover:bg-gray-800"
+          href="#login"
+        >
+          Start now
+        </a>
+      </section>
+
+      <section className="px-4 py-8 mx-auto max-w-7xl px-42 sm:px-6">
+        <div className="mt-10 mb-4">
+          <h2 className="inline leading-11 text-28 font-700">
+            Top to bottom reporting
+          </h2>
+        </div>
+        <p className="max-w-3xl mb-6">
+          Someone new starts the meeting every day, and no one gets left out.
+          When one person finishes their report, the next person on the list
+          gets to start.
         </p>
       </section>
-      <main className="flex-grow">
+
+      <section className="px-4 py-8 mx-auto max-w-7xl px-42 sm:px-6">
+        <h2 className="inline text-base leading-11 font-700">
+          What are you doing today to help the team complete the sprint?
+        </h2>
+
+        <p className="max-w-3xl mb-4">
+          Active tickets are pre-opened and placed in the center of the screen,
+          with full descriptions, images, and development status available at
+          the click of a button.
+        </p>
+
+        <h2 className="inline text-base leading-11 font-700">
+          What did you do yesterday to help the team complete the sprint?
+        </h2>
+
+        <p className="max-w-3xl mb-4">
+          Let's face it – it's hard to remember everything that happened
+          yesterday. 3Q shows both completed work and work yet to do so you're
+          ready to discuss anything that needs to be brought up.
+        </p>
+
+        <h2 className="inline text-base leading-11 font-700">
+          Is anything getting in the way of the team completing the sprint?
+        </h2>
+
+        <p className="max-w-3xl mb-4">
+          Flagged tickets are highlighted for discussion so issues can be
+          resolved immediately
+        </p>
+      </section>
+
+      <section className="px-4 py-8 mx-auto max-w-7xl px-42 sm:px-6">
+        <div className="mt-10 mb-4">
+          <h2 className="inline leading-11 text-28 font-700">
+            One click transitions
+          </h2>
+        </div>
+        <p className="max-w-3xl mb-6">
+          Instantly move reviewed tickets to the Done pile or TODO tickets into
+          progress. Integrations with GitHub are shown inline, so you can see at
+          a glance if a linked ticket is still open or has been merged.
+        </p>
+      </section>
+
+      <section className="px-4 py-8 mx-auto max-w-7xl px-42 sm:px-6">
+        <div className="mt-10 mb-4">
+          <h2 className="inline leading-11 text-28 font-700">
+            Use your existing data
+          </h2>
+        </div>
+        <p className="max-w-3xl mb-6">
+          Treat 3Q like a smarter dashboard for your existing JIRA data. To get
+          started,{' '}
+          <a
+            href="https://id.atlassian.com/manage-profile/security/api-tokens"
+            target="_blank"
+            rel="noreferrer nofollow"
+            className="text-blue-600 hover:underline"
+          >
+            create a token in your Atlassian profile
+          </a>
+          , choose the projects you want to display, and you're ready for
+          focused and efficient meetings.
+        </p>
+      </section>
+
+      <main className="flex-grow py-8 bg-blue-950">
+        <h2 className="w-full max-w-full mb-4 text-center text-gray-100 text-28 font-700">
+          Get started
+        </h2>
         <div className="max-w-sm px-4 py-3 mx-auto bg-white rounded-lg shadow-sm sm:px-6 sm:py-4">
-          <p className="mb-4 font-semibold text-center">
+          <p id="login" className="mb-4 text-base font-semibold text-center">
             Log in to your JIRA account
           </p>
 
@@ -154,7 +277,42 @@ export default function Home() {
           </form>
         </div>
       </main>
-      <footer className="pt-48 pb-8 text-center bg-blue-950">
+
+      <section className="px-4 py-8 mx-auto max-w-7xl px-42 sm:px-6">
+        <div className="mt-10 mb-4">
+          <h2 id="faq" className="inline leading-11 text-28 font-700">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <h3 className="mb-4 text-lg font-bold" id="free">
+          How much does 3Q cost?
+        </h3>
+
+        <p className="max-w-3xl mb-6">
+          3Q is completely free. This was a pet project born out of frustration
+          at too many long unfocused meetings. There is no tracking, no
+          analytics, no account, and no cost.
+        </p>
+
+        <h3 className="mb-4 text-lg font-bold"> What does 3Q stand for? </h3>
+
+        <p className="max-w-3xl mb-6">
+          The name is a reference to the{' '}
+          <a
+            href="https://en.wikipedia.org/wiki/Stand-up_meeting#Three_Questions"
+            target="_blank"
+            rel="noreferrer nofollow"
+            className="text-blue-600 hover:underline"
+          >
+            Three Questions
+          </a>{' '}
+          suggested as a framework to encourage daily reports to focus on
+          eliminating impediments and granting visibility into the progress of
+          the team.
+        </p>
+      </section>
+      <footer className="py-8 text-center bg-blue-950">
         <small className="text-white"> Made with ❤️ by Jacob Paris </small>
       </footer>
     </div>
