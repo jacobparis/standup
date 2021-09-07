@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npx next dev -p 3050",
+    "dev2": "npx next dev -p 3051",
     "build": "NODE_ENV=production npx next build",
     "postbuild": "NODE_ENV=production npx next-sitemap",
     "start": "npx next start",
@@ -13,6 +14,7 @@
     "@mdx-js/mdx": "^1.6.22",
     "@tailwindcss/forms": "^0.3.3",
     "axios": "^0.21.1",
+    "devtoolbar-react": "^1.0.35",
     "diff": "^5.0.0",
     "dotenv-flow": "^3.2.0",
     "gray-matter": "^4.0.2",
