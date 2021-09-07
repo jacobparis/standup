@@ -13,7 +13,7 @@ import SEO from '../../next-seo.json'
 const DynamicComponentWithNoSSR = dynamic(
   async () => (await import('devtoolbar-react/lib')).DevToolbar,
   {ssr: false},
-)
+) as any
 
 function MyApp({Component, pageProps}: AppProps) {
   return (
