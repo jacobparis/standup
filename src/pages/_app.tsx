@@ -1,5 +1,4 @@
 import '../styles/globals.scss'
-import 'devtoolbar-react/lib/index.css'
 
 import React from 'react'
 
@@ -20,13 +19,15 @@ function MyApp({Component, pageProps}: AppProps) {
     <>
       <DefaultSeo {...SEO} />
       <ThemeProvider forcedTheme={Component['theme'] || null}>
-        <DynamicComponentWithNoSSR
-          hosts={{
-            production: ['https://www.threeq.app'],
-            staging: ['https://standup-lovat.vercel.app'],
-            development: ['http://localhost:3050', 'http://localhost:3051'],
-          }}
-        />
+        <div>
+          <DynamicComponentWithNoSSR
+            hosts={{
+              production: ['https://www.threeq.app'],
+              staging: ['https://standup-lovat.vercel.app'],
+              development: ['http://localhost:3050', 'http://localhost:3051'],
+            }}
+          />
+        </div>
         <Component {...pageProps} />
       </ThemeProvider>
     </>
