@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic'
 import SEO from '../../next-seo.json'
 
 const DynamicComponentWithNoSSR = dynamic(
-  async () => (await import('devtoolbar-react/lib')).DevToolbar,
+  () => import('../components/DevToolbar'),
   {ssr: false},
 ) as any
 
