@@ -9,7 +9,7 @@ import {
 
 import {useUser} from '../hooks/useUser'
 
-export default function IssueTransitions({id, dark, status}) {
+export default function IssueTransitions({id, skip = false, status}) {
   const queryClient = useQueryClient()
   const user = useUser()
 
@@ -29,7 +29,7 @@ export default function IssueTransitions({id, dark, status}) {
         })
         .then((response) => response.data)
     },
-    {staleTime: Infinity},
+    {staleTime: Infinity, enabled: !skip},
   )
 
   const doTransition = (transition) => axios.post('api/transitions', transition)
@@ -64,6 +64,7 @@ export default function IssueTransitions({id, dark, status}) {
     },
     onSettled() {
       queryClient.invalidateQueries(['user', user.accountId, 'issues'])
+      queryClient.invalidateQueries(['epics'])
     },
     onError(error, transition, context: any) {
       if (context && context.previousIssues) {
@@ -83,7 +84,7 @@ export default function IssueTransitions({id, dark, status}) {
     )
   }
 
-  if (transitions.length === 0) {
+  if (!transitions || transitions.length === 0) {
     return null
   }
 
@@ -93,11 +94,7 @@ export default function IssueTransitions({id, dark, status}) {
         <button
           aria-disabled={mutation.isLoading}
           key={transition.id}
-          className={`px-2 py-1 mx-1 text-xs ${
-            dark
-              ? 'bg-blue-950 border-blue-950 text-gray-400 hover:text-white focus:border-indigo-500 focus:ring-indigo-400'
-              : 'bg-white hover:text-gray-500 focus:border-indigo-300 focus:ring-indigo-200 disabled:text-gray-400 disabled:bg-gray-50'
-          } border rounded shadow-sm hover:opacity-90 focus:outline-none  focus:ring focus:ring-offset-0  focus:ring-opacity-50`}
+          className={`px-2 py-1 mx-1 text-xs bg-white hover:text-gray-500 focus:border-indigo-300 focus:ring-indigo-200 disabled:text-gray-400 disabled:bg-gray-50 border rounded shadow-sm hover:opacity-90 focus:outline-none  focus:ring focus:ring-offset-0  focus:ring-opacity-50`}
           onClick={() => {
             mutation.mutate({
               transition: transition.id,

@@ -3,7 +3,7 @@ import React from 'react'
 import axios from 'axios'
 import {useQuery} from 'react-query'
 
-export default function IssueIntegrations({id}) {
+export default function IssueIntegrations({id, skip = false}) {
   const {isLoading, data: integrations} = useQuery(
     ['issue', id, 'developer-information'],
     () => {
@@ -15,7 +15,7 @@ export default function IssueIntegrations({id}) {
         })
         .then((response) => response.data)
     },
-    {staleTime: 3000000},
+    {staleTime: 3000000, enabled: !skip},
   )
 
   if (isLoading) {
@@ -26,7 +26,7 @@ export default function IssueIntegrations({id}) {
     )
   }
 
-  if (integrations.length === 0) {
+  if (!integrations || integrations.length === 0) {
     return null
   }
 

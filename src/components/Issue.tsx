@@ -5,7 +5,7 @@ import IssueDescriptionContent from './IssueDescriptionContent'
 import IssueIntegrations from './IssueIntegrations'
 import IssueTransitions from './IssueTransitions'
 
-export default function Issue({issue, dark = false}) {
+export default function Issue({issue, skip = false, dark = false}) {
   const [isOpen, setIsOpen] = React.useState(false)
   const {hostUrl} = useJira()
 
@@ -29,12 +29,6 @@ export default function Issue({issue, dark = false}) {
             : 'bg-yellow-100 sm:rounded-md'
           : isOpen
           ? 'bg-gray-50 sm:rounded-md pb-2'
-          : ''
-      } ${
-        dark
-          ? isFlagged
-            ? 'bg-yellow-200 bg-opacity-20'
-            : 'bg-opacity-10'
           : ''
       }`}
     >
@@ -87,10 +81,10 @@ export default function Issue({issue, dark = false}) {
         </ul>
       ) : null}
 
-      <IssueIntegrations id={issue.id} />
+      <IssueIntegrations id={issue.id} skip={skip} />
       <IssueTransitions
-        dark={dark}
         id={issue.id}
+        skip={skip}
         status={issue.fields.status.name}
       />
     </details>

@@ -3,6 +3,8 @@ import * as React from 'react'
 import {
   Button,
   DevToolbar,
+  Dropdown,
+  Item,
 } from 'devtoolbar-react/lib'
 
 export default function Toolbar() {
@@ -25,6 +27,12 @@ export default function Toolbar() {
       ) : (
         <Button name="🎨" onClick={() => setIsDesignMode(true)} />
       )}
+
+      <Dropdown name="🔗" right>
+        <Item>
+          <a href="https://github.com/jacobparis/standup">🐙 GitHub</a>
+        </Item>
+      </Dropdown>
     </DevToolbar>
   )
 }

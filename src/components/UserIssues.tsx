@@ -154,7 +154,7 @@ function Column({items, hideWhenEmpty, label, defaultClosed = false}) {
       <ul>
         {items.map((issue) => (
           <li key={issue.id} className="mb-2 -mx-4">
-            <Issue issue={issue} />
+            <Issue issue={issue} skip={!isOpen} />
           </li>
         ))}
       </ul>
