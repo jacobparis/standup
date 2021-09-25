@@ -34,7 +34,7 @@ export default function Epic({issue, dark = false}) {
     <details
       onToggle={() => setIsOpen((isOpen) => !isOpen)}
       open={isOpen}
-      className={`text-gray-900 sm:rounded-md pb-2 ${
+      className={`text-gray-900 rounded-md pb-2 ${
         isOpen ? 'bg-gray-50' : 'bg-white'
       }`}
     >

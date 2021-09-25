@@ -7,17 +7,8 @@ import Cookies from 'js-cookie'
 import cookies from 'next-cookies'
 import Head from 'next/head'
 import Link from 'next/link'
-import {useUID} from 'react-uid'
 
 export default function LoggedIn({user}) {
-  const [showTheme, setShowTheme] = React.useState(false)
-  const jiraId = useUID()
-  const emailId = useUID()
-  const passwordId = useUID()
-  const [loggingIn, setLoggingIn] = React.useState(false)
-
-  const [message, setMessage] = React.useState('')
-
   // on submit, store their email and password in a samesite cookie
   const handleSubmit = async (event) => {
     Cookies.remove('credentials', {
@@ -49,10 +40,6 @@ export default function LoggedIn({user}) {
             3Q Dashboard
           </h1>
           <p className="mb-4 font-semibold text-center">Welcome back!</p>
-
-          {message.length > 0 ? (
-            <p className="mb-4 text-center text-red-600">{message}</p>
-          ) : null}
 
           <div className="my-4 text-center">
             <Link href="standup">

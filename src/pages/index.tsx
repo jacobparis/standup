@@ -114,9 +114,7 @@ export default function Home() {
 
       <DecorativeHeader>
         <div className="mt-10 mb-4">
-          <h1 className="inline leading-11 text-7xl font-700">
-            Better standup meetings
-          </h1>
+          <h1 className="inline text-7xl font-700">Better standup meetings</h1>
         </div>
         <p className="max-w-3xl mb-6 leading-snug tracking-tight text-28 font-300">
           See your team and everything they're working on in one place, so
@@ -131,11 +129,51 @@ export default function Home() {
       </DecorativeHeader>
 
       <div className="bg-gray-100">
-        <section className="max-w-4xl px-4 py-8 mx-auto px-42 sm:px-6">
-          <div className="mt-10 mb-4">
-            <h2 className="inline leading-11 text-28 font-700">
-              Top to bottom reporting
+        <section className="max-w-4xl py-8 mx-auto ">
+          <div className="px-4 mb-4">
+            <h2 className="inline text-28 font-700">
+              Choose your JIRA projects
             </h2>
+          </div>
+
+          <div className="flex">
+            <div className="flex-1 px-4 sm:px-6">
+              <p className="max-w-3xl mb-6">
+                Include the projects that are relevant to the meeting at hand
+                and ignore the rest
+              </p>
+            </div>
+
+            <div className="flex-1 mx-4 overflow-hidden rounded">
+              <img src="./project-selector-01.png" />
+            </div>
+          </div>
+        </section>
+
+        <section className="max-w-4xl py-8 mx-auto ">
+          <div className="px-4 mb-4">
+            <h2 className="inline text-28 font-700">
+              See epic progress at a glance
+            </h2>
+          </div>
+
+          <div className="flex">
+            <div className="flex-1 px-4 sm:px-6">
+              <p className="max-w-3xl mb-6">
+                Begin each meeting with a summary of progress in each active
+                epic
+              </p>
+            </div>
+
+            <div className="flex-1 mx-4 overflow-hidden rounded">
+              <img src="./epic-progress-01.png" />
+            </div>
+          </div>
+        </section>
+
+        <section className="max-w-4xl px-4 py-8 mx-auto px-42 sm:px-6">
+          <div className="mb-4">
+            <h2 className="inline text-28 font-700">Top to bottom reporting</h2>
           </div>
           <p className="max-w-3xl mb-6">
             Someone new starts the meeting every day, and no one gets left out.
@@ -143,56 +181,66 @@ export default function Home() {
             gets to start.
           </p>
         </section>
-
-        <section className="max-w-4xl px-4 py-8 mx-auto px-42 sm:px-6">
-          <h2 className="inline text-base leading-11 font-700">
-            What are you doing today to help the team complete the sprint?
-          </h2>
-
-          <p className="max-w-3xl mb-4">
-            Active tickets are pre-opened and placed in the center of the
-            screen, with full descriptions, images, and development status
-            available at the click of a button.
-          </p>
-
-          <h2 className="inline text-base leading-11 font-700">
-            What did you do yesterday to help the team complete the sprint?
-          </h2>
-
-          <p className="max-w-3xl mb-4">
-            Let's face it – it's hard to remember everything that happened
-            yesterday. 3Q shows both completed work and work yet to do so you're
-            ready to discuss anything that needs to be brought up.
-          </p>
-
-          <h2 className="inline text-base leading-11 font-700">
-            Is anything getting in the way of the team completing the sprint?
-          </h2>
-
-          <p className="max-w-3xl mb-4">
-            Flagged tickets are highlighted for discussion so issues can be
-            resolved immediately
-          </p>
-        </section>
-
-        <section className="max-w-4xl px-4 py-8 mx-auto px-42 sm:px-6">
-          <div className="mt-10 mb-4">
-            <h2 className="inline leading-11 text-28 font-700">
-              One click transitions
+        <section className="flex max-w-4xl mx-auto">
+          <div className="flex-1 px-4 sm:px-6">
+            <h2 className="inline text-base font-700">
+              What are you doing today to help the team complete the sprint?
             </h2>
+
+            <p className="max-w-3xl mb-4">
+              Active tickets are pre-opened and placed in the center of the
+              screen, with full descriptions, images, and development status
+              available at the click of a button.
+            </p>
+
+            <h2 className="inline text-base font-700">
+              What did you do yesterday to help the team complete the sprint?
+            </h2>
+
+            <p className="max-w-3xl mb-4">
+              Let's face it – it's hard to remember everything that happened
+              yesterday. 3Q shows both completed work and work yet to do so
+              you're ready to discuss anything that needs to be brought up.
+            </p>
+
+            <h2 className="inline text-base font-700">
+              Is anything getting in the way of the team completing the sprint?
+            </h2>
+
+            <p className="max-w-3xl mb-4">
+              Flagged tickets are highlighted for discussion so issues can be
+              resolved immediately
+            </p>
           </div>
-          <p className="max-w-3xl mb-6">
-            Instantly move reviewed tickets to the Done pile or TODO tickets
-            into progress. Integrations with GitHub are shown inline, so you can
-            see at a glance if a linked ticket is still open or has been merged.
-          </p>
+
+          <div className="flex-1 max-w-4xl mx-auto overflow-hidden rounded-lg ">
+            <img src="./user-issues-01.png" />
+          </div>
+        </section>
+        <section className="max-w-4xl py-8 mx-auto ">
+          <div className="px-4 mb-4">
+            <h2 className="inline text-28 font-700">One click transitions</h2>
+          </div>
+
+          <div className="flex">
+            <div className="flex-1 px-4 sm:px-6">
+              <p className="max-w-3xl mb-6">
+                Instantly move reviewed tickets to the Done pile or TODO tickets
+                into progress. Integrations with code repositories like GitLab
+                or GitHub are shown inline, so you can see at a glance if a
+                linked ticket is still open or has been merged.
+              </p>
+            </div>
+
+            <div className="flex-1 mx-4 overflow-hidden rounded">
+              <img src="./issue-integrations-01.png" />
+            </div>
+          </div>
         </section>
 
         <section className="max-w-4xl px-4 py-8 mx-auto px-42 sm:px-6">
           <div className="mt-10 mb-4">
-            <h2 className="inline leading-11 text-28 font-700">
-              Use your existing data
-            </h2>
+            <h2 className="inline text-28 font-700">Use your existing data</h2>
           </div>
           <p className="max-w-3xl mb-6">
             Treat 3Q like a smarter dashboard for your existing JIRA data. To
@@ -285,7 +333,7 @@ export default function Home() {
 
         <section className="max-w-4xl px-4 py-8 mx-auto px-42 sm:px-6">
           <div className="mt-10 mb-4">
-            <h2 id="faq" className="inline leading-11 text-28 font-700">
+            <h2 id="faq" className="inline text-28 font-700">
               Frequently Asked Questions
             </h2>
           </div>

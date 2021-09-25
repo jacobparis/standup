@@ -1,6 +1,10 @@
 import React from 'react'
 
-export default function DecorativeHeader({children}) {
+export default function DecorativeHeader({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <>
       <header className="bg-gradient-to-tr from-blue-600 to-blue-500 text-gray-50">

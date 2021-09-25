@@ -49,7 +49,9 @@ export default function User({user, disabled, className = '', ...props}) {
         >
           <header className="flex">
             <img className="w-12 rounded-full shadow" src={avatar96px} />
-            <h2 className="mx-4 text-gray-500">{user.displayName}</h2>
+            <h2 className="mx-4 font-semibold opacity-80">
+              {user.displayName}
+            </h2>
           </header>
 
           {disabled ? null : (
