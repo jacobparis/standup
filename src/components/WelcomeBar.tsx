@@ -19,14 +19,20 @@ export default function WelcomeBar() {
     {staleTime: Infinity},
   )
 
+  const avatar96px = isLoading
+    ? null
+    : user.avatarUrls['48x48'].replace('/48', '/96')
+
   return (
-    <div className="flex items-center justify-between px-4 py-2 bg-blue-950">
-      <p className="text-4xl text-white opacity-70">Standup </p>
+    <div className="flex items-center justify-between px-4 py-2 ">
+      <p className="text-4xl text-white opacity-70">
+        <a href="/">3Q</a>
+      </p>
 
       {isLoading ? null : (
         <img
           className="w-12 rounded-full shadow"
-          src={user.avatarUrls['48x48']}
+          src={avatar96px}
           alt={user.displayName}
         />
       )}

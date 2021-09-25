@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   darkMode: 'class',
   purge: {
@@ -20,9 +22,7 @@ module.exports = {
         screen: {raw: 'screen'},
       },
       colors: {
-        blue: {
-          950: '#242C42',
-        },
+        blue: colors.sky,
       },
       typography: (theme) => ({
         dark: {

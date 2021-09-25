@@ -27,7 +27,7 @@ export default function UnassignedIssues({className = '', ...props}) {
         className={`sm:rounded-lg px-4 sm:px-6 opacity-95 py-4 ${className}`}
       >
         <header className="flex mb-4">
-          <h2 className="mx-4 text-gray-50">Unassigned tickets</h2>
+          <h2 className="mx-4 text-gray-900">Unassigned tickets</h2>
         </header>
 
         <section>
@@ -42,7 +42,7 @@ export default function UnassignedIssues({className = '', ...props}) {
                   <ul>
                     {unassignedIssues.map((issue) => (
                       <li key={issue.id} className="mb-2 -mx-4">
-                        <Issue issue={issue} dark />
+                        <Issue issue={issue} />
                       </li>
                     ))}
                   </ul>
@@ -51,7 +51,7 @@ export default function UnassignedIssues({className = '', ...props}) {
 
               {unassignedIssues.length === 0 ? (
                 <div>
-                  <h3 className="mt-2 text-sm font-semibold text-gray-500">
+                  <h3 className="mt-2 text-sm font-semibold text-gray-900">
                     There are no unassigned tickets on the board
                   </h3>
                 </div>
