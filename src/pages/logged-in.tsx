@@ -1,6 +1,8 @@
 import React from 'react'
 
 import axios, {AxiosError} from 'axios'
+import DecorativeFooter from 'components/DecorativeFooter'
+import DecorativeHeader from 'components/DecorativeHeader'
 import Cookies from 'js-cookie'
 import cookies from 'next-cookies'
 import Head from 'next/head'
@@ -40,10 +42,11 @@ export default function LoggedIn({user}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="grid content-center justify-center flex-grow">
-        <div className="max-w-sm px-4 py-3 mx-auto bg-white rounded-lg shadow sm:px-6 sm:py-4">
+      <DecorativeHeader />
+      <main className="grid content-center justify-center flex-grow bg-gray-100">
+        <div className="max-w-sm px-4 py-3 mx-auto mb-4 bg-white rounded-lg shadow sm:px-6 sm:py-4">
           <h1 className="py-4 mb-4 text-6xl text-center font-700">
-            Standup Dashboard
+            3Q Dashboard
           </h1>
           <p className="mb-4 font-semibold text-center">Welcome back!</p>
 
@@ -68,9 +71,16 @@ export default function LoggedIn({user}) {
           </form>
         </div>
       </main>
-      <footer className="pt-48 pb-8 text-center bg-blue-950">
-        <small className="text-white"> Made with ❤️ by Jacob Paris </small>
-      </footer>
+      <DecorativeFooter>
+        <div className="py-4 text-center">
+          <small className="mb-4 text-gray-700">
+            Made with ❤️ by{' '}
+            <a href="https://twitter.com/jacobmparis" target="_blank">
+              Jacob Paris
+            </a>
+          </small>
+        </div>
+      </DecorativeFooter>
     </div>
   )
 }
@@ -96,6 +106,15 @@ function TextInput({className = '', disabled = false, ...props}) {
 
 export async function getServerSideProps(context) {
   const serverSideCookies = cookies(context)
+
+  if (!serverSideCookies.jiraHostUrl) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
 
   try {
     const response = await axios.get(
