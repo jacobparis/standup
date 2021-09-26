@@ -8,15 +8,10 @@ import IssueTransitions from './IssueTransitions'
 export default function Issue({issue, skip = false, dark = false}) {
   const [isOpen, setIsOpen] = React.useState(false)
   const {hostUrl} = useJira()
-
-  let isFlagged = false
-  if (issue.fields['customfield_10021']) {
-    isFlagged = Boolean(
-      issue.fields['customfield_10021'].some(
-        (field) => field.value === 'Impediment',
-      ),
-    )
-  }
+  const isFlagged =
+    issue.fields['customfield_10021']?.some(
+      (field) => field.value === 'Impediment',
+    ) || false
 
   return (
     <details
