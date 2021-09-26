@@ -1,11 +1,6 @@
 import * as React from 'react'
 
-import {
-  Button,
-  DevToolbar,
-  Dropdown,
-  Item,
-} from 'devtoolbar-react/lib'
+import {Button, DevToolbar, Dropdown, Item} from 'devtoolbar-react/lib'
 
 export default function Toolbar() {
   const [isDesignMode, setIsDesignMode] = React.useState(false)
@@ -22,11 +17,11 @@ export default function Toolbar() {
         development: ['http://localhost:3050', 'http://localhost:3051'],
       }}
     >
-      {isDesignMode ? (
-        <Button name="🎨" active onClick={() => setIsDesignMode(false)} />
-      ) : (
-        <Button name="🎨" onClick={() => setIsDesignMode(true)} />
-      )}
+      <Button
+        name="🎨"
+        active={isDesignMode}
+        onClick={() => setIsDesignMode(!isDesignMode)}
+      />
 
       <Dropdown name="🔗" right>
         <Item>
